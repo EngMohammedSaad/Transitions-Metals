@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>امتحان العناصر الانتقالية</title>
+<style>
+:root{
+  --bg:#eef3f5;--card:#ffffff;--ink:#203238;--muted:#66777d;--primary:#317f8d;--soft:#e7f0f2;--line:#cfdcdf;--good:#2f7d5d;--bad:#b34f4a;
+}
+:root[data-theme="midnight"]{--bg:#10171a;--card:#182126;--ink:#eaf1f3;--muted:#a1b2b7;--primary:#72bdca;--soft:#24343a;--line:#364a50;--good:#6cc59d;--bad:#eb8980}
+:root[data-theme="forest"]{--bg:#eff6f0;--card:#ffffff;--ink:#27402d;--muted:#6d7e72;--primary:#3f8a56;--soft:#e3eee5;--line:#d0ded3;--good:#2e7e5b;--bad:#b1514d}
+:root[data-theme="violet"]{--bg:#f4f1f9;--card:#ffffff;--ink:#382c4b;--muted:#7a7087;--primary:#6e54ab;--soft:#ebe5f7;--line:#ddd4ed;--good:#347f67;--bad:#b45163}
+:root[data-theme="sunset"]{--bg:#fff4ee;--card:#ffffff;--ink:#493128;--muted:#8b6d61;--primary:#d66b43;--soft:#fae3d9;--line:#ead4ca;--good:#3b805b;--bad:#b5504c}
+:root[data-theme="rose"]{--bg:#fff2f5;--card:#ffffff;--ink:#452c37;--muted:#886b75;--primary:#ba4e72;--soft:#f8e0e7;--line:#ecd0da;--good:#367d66;--bad:#b64f58}
+:root[data-theme="mint"]{--bg:#edf9f6;--card:#ffffff;--ink:#21403c;--muted:#69837d;--primary:#2d897c;--soft:#dff0ec;--line:#cce1dc;--good:#2e7d63;--bad:#b4504c}
+:root[data-theme="paper"]{--bg:#f5f1e8;--card:#fffdf7;--ink:#403e37;--muted:#777269;--primary:#6b7361;--soft:#ebe7dc;--line:#d9d4c7;--good:#4e8367;--bad:#a94f49}
+:root[data-theme="coffee"]{--bg:#f6efea;--card:#fffaf5;--ink:#49372c;--muted:#877365;--primary:#896149;--soft:#eee1d8;--line:#e0d1c5;--good:#4b7b5d;--bad:#ad4f49}
+:root[data-theme="neon"]{--bg:#111417;--card:#191d21;--ink:#eef4f6;--muted:#a7b2b6;--primary:#51d4b7;--soft:#272d32;--line:#3c474d;--good:#64d3a0;--bad:#ff777d}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
+body{font-size:15px;line-height:1.55;overflow-x:hidden}
+button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:64px;z-index:100;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:6px max(8px,env(safe-area-inset-left)) 6px max(8px,env(safe-area-inset-right));direction:rtl}
+.brand{font-weight:900;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.controls{display:flex;align-items:center;gap:6px;flex:none}
+.smallBtn{height:36px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--soft);color:var(--ink);font-weight:800;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);background:var(--soft);border-radius:999px;padding:3px 9px;font-weight:800;white-space:nowrap}
+.volumeWrap{height:36px;display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:0 7px}
+.volumeWrap span{font-size:12px;font-weight:800}
+#volume{width:82px;accent-color:var(--primary)}
+
+main{width:100%;height:100%;padding:76px 10px 10px}
+.screen{height:100%;width:min(1100px,100%);margin:0 auto}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px}
+
+#loading{position:fixed;inset:0;z-index:500;background:var(--bg);display:grid;place-items:center;padding:18px}
+.loader{width:min(350px,92vw);text-align:center}
+.loaderBox{width:58px;height:58px;border:1px solid var(--line);border-radius:14px;background:var(--soft);display:grid;place-items:center;margin:0 auto 12px;font-size:24px;font-weight:900}
+.loadTitle{font-size:19px;font-weight:900}.loadSub{font-size:13px;color:var(--muted);margin-top:2px}
+.loadTrack{height:5px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:14px}.loadFill{height:100%;width:0;background:var(--primary);transition:width .08s linear}
+
+#home{height:100%;display:flex;align-items:center;justify-content:center;padding:12px}
+.homeBox{width:min(920px,100%);padding:18px}
+.homeTitle{font-size:clamp(25px,4vw,36px);font-weight:900;line-height:1.2;margin:0}
+.homeSub{color:var(--muted);margin:5px 0 12px}
+.infoGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0}
+.info{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:9px;text-align:center}.info strong{display:block;font-size:18px}.info small{color:var(--muted)}
+.scope{padding:9px 11px;border:1px dashed var(--line);border-radius:11px;color:var(--muted);margin:7px 0;font-size:13px}
+.homeActions{display:flex;gap:7px;margin-top:10px}.homeActions button{flex:1;height:46px;border-radius:11px;border:0;font-weight:900}
+.primary{background:var(--primary);color:#fff}.secondary{background:var(--soft);color:var(--ink);border:1px solid var(--line)!important}
+
+#exam{height:100%;display:none;overflow:hidden}
+.examInner{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:7px}
+.examHead{padding:2px 0 0}.examTop{display:flex;align-items:center;gap:6px;min-height:34px}.examTop .timer{margin-right:auto;font-variant-numeric:tabular-nums}.timer.low{color:var(--bad)}
+.progress{height:5px;background:var(--soft);border-radius:99px;overflow:hidden}.progress>span{display:block;width:0;height:100%;background:var(--primary);transition:width .12s linear}
+.questionArea{min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding-bottom:2px}
+.questionCard{width:min(920px,100%);height:auto;max-height:100%;min-height:0;padding:13px;background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.qMeta{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:3px}.qText{font-size:clamp(18px,2.4vw,24px);font-weight:900;line-height:1.48;margin:0 0 9px}.qText.long{font-size:clamp(15px,2vw,20px);line-height:1.42}
+.answerGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.option{min-width:0;display:flex;align-items:flex-start;gap:7px;text-align:right;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:8px 9px;min-height:46px}.option.selected{border-color:var(--primary);background:var(--soft)}
+.letter{width:27px;height:27px;flex:none;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-weight:900}.option.selected .letter{background:var(--primary);color:#fff}.optionText{flex:1;min-width:0;font-weight:700;line-height:1.38}
+.hint{font-size:11px;color:var(--muted);margin-top:5px}.formula{direction:ltr;unicode-bidi:isolate;display:inline-block;white-space:nowrap}
+.essayText{width:100%;height:115px;resize:none;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:11px;padding:9px;outline:none}.essayText:focus{border-color:var(--primary)}
+.examNav{display:flex;gap:6px}.examNav button{height:45px;border:0;border-radius:11px;font-weight:900}.examNav .wide{flex:1}
+
+.modal{position:fixed;inset:0;z-index:300;background:rgba(15,25,30,.32);display:none;place-items:center;padding:10px}.modalBox{width:min(1050px,100%);max-height:calc(100dvh - 20px);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;overflow:hidden}.modalHead{display:flex;align-items:center;gap:7px;margin-bottom:9px}.modalHead h2{margin:0;font-size:19px}.modalClose{margin-right:auto;height:35px;border:1px solid var(--line);border-radius:9px;background:var(--soft);color:var(--ink);padding:0 10px;font-weight:800}
+.tutText{margin:0 0 8px;color:var(--muted)}.tutStep{padding:7px 0;border-top:1px solid var(--line)}.tutStep b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--soft);margin-left:6px}.tutNav{display:flex;gap:6px;margin-top:8px}.tutNav button{flex:1;height:43px;border:0;border-radius:10px;font-weight:900}.dots{display:flex;justify-content:center;gap:4px;margin-top:8px}.dot{width:7px;height:7px;border-radius:50%;background:var(--line)}.dot.on{width:18px;border-radius:9px;background:var(--primary)}
+.themeGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.themeBtn{min-height:55px;border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:10px;font-weight:800}.themeBtn.active{outline:2px solid var(--primary)}
+
+/* periodic table */
+.periodicWrap{width:100%;}.periodicHint{font-size:11px;color:var(--muted);margin:0 0 6px}.ptable{display:grid;direction:ltr;grid-template-columns:32px repeat(18,minmax(0,1fr));grid-template-rows:24px repeat(7,minmax(0,1fr)) 8px repeat(2,minmax(0,1fr));gap:2px;width:100%;}
+.groupLabel,.periodLabel{display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:var(--muted);border:1px solid var(--line);border-radius:3px;background:var(--bg)}
+.groupLabel{line-height:1;text-align:center}.periodLabel{font-size:9px}
+.el{min-width:0;min-height:0;border:1px solid var(--line);border-radius:4px;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.02;padding:1px;overflow:hidden}.el b{font-size:clamp(9px,1.5vw,15px)}.el small{font-size:6px;color:var(--muted)}.el.trans{background:var(--primary);color:#fff;border-color:var(--primary)}.el.trans small{color:#fff}
+.fBlock{display:flex;direction:ltr;gap:2px;justify-content:center;margin-top:6px}.fLabel{width:32px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:3px}.fRow{flex:1;display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:2px}.fEl{border:1px solid var(--line);border-radius:4px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:clamp(8px,1.5vw,13px);font-weight:800;min-width:0;min-height:25px}
+.valenceScroll{max-height:calc(100dvh - 120px);overflow:auto;padding:2px}.valenceTable{display:grid;grid-template-columns:1.25fr .55fr 1.55fr 1.8fr;gap:3px}.valenceTable>div{min-width:0;padding:7px 5px;border:1px solid var(--line);background:var(--soft);border-radius:5px;text-align:center;font-weight:700;font-size:13px;overflow-wrap:anywhere}.valenceTable .vh{background:var(--primary);color:#fff;font-weight:900;position:sticky;top:0;z-index:2}.vValences{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px}.vChip{display:inline-flex;align-items:center;justify-content:center;min-width:30px;padding:2px 7px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:900;font-size:12px;direction:ltr}.vExample{font-weight:800;direction:ltr}.vNote{margin:0 0 7px;padding:7px 9px;border:1px dashed var(--line);border-radius:8px;background:var(--bg);color:var(--muted);font-size:11px;line-height:1.5}
+.printBtn{margin-right:auto}
+#result{display:none;height:100%;overflow:auto;padding-right:1px}.resultBox{padding:17px}.score{font-size:46px;font-weight:900;text-align:center}.resultTitle{text-align:center}.review{border:1px solid var(--line);border-radius:11px;padding:9px;margin:6px 0}.review.good{border-color:var(--good)}.review.bad{border-color:var(--bad)}.reviewTitle{font-weight:900;line-height:1.45}.goodText{color:var(--good);font-weight:800}.badText{color:var(--bad);font-weight:800}.explain{background:var(--soft);padding:7px;border-radius:8px;color:var(--muted);font-size:12px;margin-top:5px}.essayScore{margin-top:5px;font-weight:900}.essayAnswer{white-space:pre-wrap;background:var(--soft);padding:7px;border-radius:8px;margin-top:4px;min-height:40px}.rubric{font-size:12px;color:var(--muted);margin-top:4px}.resultActions{display:flex;gap:7px;margin-top:8px}.resultActions button{flex:1;height:44px;border:0;border-radius:10px;font-weight:900}
+
+@media(max-width:700px){
+  .topbar{height:74px}.brand{font-size:15px}.smallBtn{height:34px;padding:0 7px;font-size:11px}.volumeWrap{height:34px}.volumeWrap span{font-size:10px}.volumeWrap #volume{width:60px}.topbar{gap:4px}.controls{gap:4px}.valenceTable>div{font-size:10px;padding:6px 3px}
+  main{padding:84px 7px 7px}.homeBox{padding:13px}.homeTitle{font-size:25px}.homeSub{font-size:13px}.infoGrid{grid-template-columns:repeat(2,1fr);gap:6px}.info{padding:7px}.info strong{font-size:17px}.scope{font-size:12px}.homeActions button{height:43px;font-size:13px}
+  .qText{font-size:17px}.qText.long{font-size:14px}.option{min-height:42px;padding:7px}.optionText{font-size:13px}.letter{width:25px;height:25px;font-size:12px}.answerGrid{gap:5px}
+  .questionCard{padding:10px}.examNav button{height:42px}
+  .themeGrid{grid-template-columns:repeat(2,1fr)}
+  .ptable{grid-template-columns:21px repeat(18,minmax(0,1fr));grid-template-rows:19px repeat(7,minmax(0,1fr)) 6px repeat(2,minmax(0,1fr));gap:1px;direction:ltr}.fLabel{width:21px}.fRow{gap:1px}.fEl{min-height:20px}
+}
+@media(max-width:390px){.topbar{height:78px}.brand{font-size:14px}.smallBtn{padding:0 6px}.volumeWrap #volume{width:54px}.volumeWrap{padding:0 5px}.volumeWrap span:last-child{display:none}.qText{font-size:15px;line-height:1.3;margin-bottom:6px}.qText.long{font-size:12px;line-height:1.28}.option{min-height:38px;padding:5px 6px;gap:5px}.optionText{font-size:11px;line-height:1.25}.letter{width:22px;height:22px;font-size:11px}.answerGrid{gap:4px}.questionCard{padding:8px}.qMeta{font-size:10px;margin-bottom:2px}.hint{font-size:9px;margin-top:3px}.examNav button{height:40px}.homeTitle{font-size:23px}}
+@media(max-height:650px) and (max-width:700px){
+  .topbar{height:68px}
+  main{padding-top:75px}
+  .examInner{gap:4px}
+  .examTop{min-height:29px}
+  .progress{height:4px}
+  .questionCard{padding:7px}
+  .qText{font-size:14px;line-height:1.28;margin-bottom:5px}
+  .qText.long{font-size:11px;line-height:1.22}
+  .answerGrid{gap:4px}
+  .option{min-height:35px;padding:4px 5px}
+  .optionText{font-size:10px;line-height:1.2}
+  .letter{width:20px;height:20px;font-size:10px}
+  .hint{font-size:8px;margin-top:2px}
+  .examNav button{height:38px}
+}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="loader"><div class="loaderBox">ك</div><div class="loadTitle">جاري تحميل الأسئلة والإجابات</div><div class="loadSub" id="loadSub">تجهيز الامتحان...</div><div class="loadTrack"><div class="loadFill" id="loadFill"></div></div></div></div>
+
+<header class="topbar">
+  <div class="brand">امتحان العناصر الانتقالية</div>
+  <div class="controls">
+    <button class="smallBtn" id="periodicBtn">الجدول الدوري</button>
+    <button class="smallBtn" id="valenceBtn">التكافؤات</button>
+    <div class="volumeWrap"><span>الصوت</span><input id="volume" type="range" min="0" max="100" value="32" aria-label="مستوى الصوت"><span id="volumeValue">32%</span></div>
+    <button class="smallBtn" id="themeBtn">الستايل</button>
+  </div>
+</header>
+
+<main><div class="screen">
+  <section id="home" class="panel">
+    <div class="homeBox">
+      <h1 class="homeTitle">امتحان العناصر الانتقالية</h1>
+      <p class="homeSub">نسخة خفيفة، ثابتة على مقاس الشاشة، ومناسبة للموبايل واللابتوب.</p>
+      <div class="infoGrid">
+        <div class="info"><strong>30</strong><small>إجمالي الأسئلة</small></div>
+        <div class="info"><strong>27</strong><small>اختيار من متعدد</small></div>
+        <div class="info"><strong>3</strong><small>مقالي</small></div>
+        <div class="info"><strong>60 دقيقة</strong><small>الوقت</small></div>
+      </div>
+      <div class="scope">موعد الامتحان من الساعة 7:00 مساءً حتى 8:00 مساءً، وينتهي تلقائيًا عند الساعة 8:00. الصوت نبضات هادئة ويمكن ضبط مستواه من الشريط أعلى الصفحة.</div>
+      <div class="scope">المؤقت يبدأ مع أول إجابة فعلية. الصوت نبضات هادئة ويمكن ضبط مستواه من الشريط أعلى الصفحة.</div>
+      <div class="homeActions"><button class="primary" id="startBtn">ابدأ الامتحان</button><button class="secondary" id="themeHomeBtn">اختيار الستايل</button></div>
+    </div>
+  </section>
+
+  <section id="exam">
+    <div class="examInner">
+      <div class="examHead"><div class="examTop"><span class="pill" id="counter">السؤال 1 من 30</span><span class="pill" id="level">سهل</span><span class="pill timer" id="timer">60:00</span></div><div class="progress"><span id="progressFill"></span></div></div>
+      <div class="questionArea"><div id="questionCard" class="questionCard"></div></div>
+      <div class="examNav"><button class="secondary" id="prevBtn">السابق</button><button class="primary wide" id="nextBtn" disabled>التالي</button></div>
+    </div>
+  </section>
+
+  <section id="result">
+    <div class="panel resultBox"><div class="resultTitle">النتيجة النهائية</div><div class="score" id="scoreNum">0 / 42</div><div id="scoreMsg" class="resultTitle"></div><div id="breakdown" style="margin-top:8px;text-align:center"></div></div>
+    <div class="panel" style="padding:12px;margin-top:8px"><h2 style="margin:0 0 8px;font-size:18px">مراجعة الاختيار من متعدد</h2><div id="mcqReview"></div></div>
+    <div class="panel" style="padding:12px;margin-top:8px"><h2 style="margin:0 0 8px;font-size:18px">تصحيح الأسئلة المقالية</h2><div id="essayReview"></div></div>
+    <div class="resultActions"><button class="primary" id="restartBtn">إعادة الامتحان</button><button class="secondary" id="resultThemeBtn">تغيير الستايل</button></div>
+  </section>
+</div></main>
+
+<div id="tutorial" class="modal"><div class="modalBox"><div class="modalHead"><h2 id="tutTitle"></h2></div><p id="tutText" class="tutText"></p><div id="tutSteps"></div><div id="tutDots" class="dots"></div><div class="tutNav"><button id="tutPrev" class="secondary">السابق</button><button id="tutNext" class="primary">التالي</button></div></div></div>
+<div id="themes" class="modal"><div class="modalBox"><div class="modalHead"><h2>اختيار الستايل</h2><button class="modalClose" id="closeThemes">إغلاق</button></div><div class="themeGrid" id="themeGrid"></div></div></div>
+<div id="periodic" class="modal"><div class="modalBox"><div class="modalHead"><h2>الجدول الدوري</h2><button class="modalClose" id="printPeriodic">طباعة الجدول</button><button class="modalClose" id="closePeriodic">إغلاق</button></div><div class="periodicWrap"><p class="periodicHint">الصف العلوي يوضح أرقام المجموعات، و3B إلى 8B بالطريقة القديمة، مع تمييز عناصر السلسلة الانتقالية الأولى.</p><div id="periodicGrid"></div></div></div></div>
+  <div id="valence" class="modal"><div class="modalBox"><div class="modalHead"><h2>التكافؤات الشائعة</h2><button class="modalClose" id="printValence">طباعة الجدول</button><button class="modalClose" id="closeValence">إغلاق</button></div><div class="valenceScroll"><p class="vNote"><b>ملاحظة:</b> الأرقام هنا هي أشهر التكافؤات/حالات التأكسد المستخدمة دراسيًا في كتابة الصيغ والمركبات. العناصر التي لها أكثر من تكافؤ ستظهر في صورة بادجات منفصلة.</p><div class="valenceTable" id="valenceTable"><div class="vh">العنصر</div><div class="vh">الرمز</div><div class="vh">التكافؤات</div><div class="vh">مثال</div></div></div></div></div>
+
+  <script>
+    const VALENCE_DATA=[
+      ['الهيدروجين','H','1','HCl / H₂O'],
+      ['الكربون','C','2,4','CO / CH₄'],
+      ['النيتروجين','N','3,5','NH₃ / HNO₃'],
+      ['الأكسجين','O','2','H₂O'],
+      ['الفلور','F','1','HF'],
+      ['الصوديوم','Na','1','NaCl'],
+      ['المغنيسيوم','Mg','2','MgCl₂'],
+      ['الألومنيوم','Al','3','AlCl₃'],
+      ['الكبريت','S','2,4,6','H₂S / SO₂ / SO₃'],
+      ['الكلور','Cl','1,3,5,7','HCl / HClO₃ / HClO₄'],
+      ['البوتاسيوم','K','1','KCl'],
+      ['الكالسيوم','Ca','2','CaCl₂'],
+      ['السكنديوم','Sc','3','ScCl₃'],
+      ['التيتانيوم','Ti','2,3,4','TiCl₂ / TiCl₃ / TiCl₄'],
+      ['الفاناديوم','V','2,3,4,5','VO / V₂O₃ / VO₂ / V₂O₅'],
+      ['الكروم','Cr','2,3,6','CrCl₂ / Cr₂O₃ / K₂Cr₂O₇'],
+      ['المنجنيز','Mn','2,3,4,6,7','MnCl₂ / MnO₂ / KMnO₄'],
+      ['الحديد','Fe','2,3','FeCl₂ / FeCl₃'],
+      ['الكوبالت','Co','2,3','CoCl₂ / CoCl₃'],
+      ['النيكل','Ni','2,3','NiCl₂ / Ni₂O₃'],
+      ['النحاس','Cu','1,2','CuCl / CuCl₂'],
+      ['الزنك','Zn','2','ZnCl₂'],
+      ['الفضة','Ag','1','AgCl']
+    ];
+
+    const valenceTable=document.getElementById('valenceTable');
+    valenceTable.innerHTML+=VALENCE_DATA.map(([name,sym,vals,example])=>`
+      <div>${name}</div>
+      <div class="vExample">${sym}</div>
+      <div class="vValences">${vals.split(',').map(v=>`<span class="vChip">${v}</span>`).join('')}</div>
+      <div class="vExample">${example}</div>
+    `).join('');
+  </script>
+
+<script>
+const EXAM_START_HOUR=19,EXAM_START_MINUTE=0,EXAM_END_HOUR=20,EXAM_END_MINUTE=0,MCQ_COUNT=27,ESSAY_MARKS=5,TOTAL_MARKS=27+3*ESSAY_MARKS;
+const Q=(q,opts,ans,exp,level='سهل',long=false)=>({type:'mcq',q,options:opts,answer:ans,exp,level,long});
+const QUESTIONS=[
+Q('عندما نبدأ دراسة السلسلة الانتقالية الأولى وننظر إلى العناصر الموجودة في بدايتها، نجد أن الإلكترونات الجديدة لا تظل في المستوى الخارجي فقط، بل يبدأ امتلاء المستوى الفرعي الداخلي 3d تدريجيًا. بناءً على هذه الفكرة، ما أقصى عدد من الإلكترونات الذي يمكن أن يحتوي عليه المستوى الفرعي 3d؟',['10','5','6','14'],0,'المستوى الفرعي d يحتوي على خمسة أوربيتالات، وكل أوربيتال يتسع لإلكترونين، لذلك السعة القصوى تساوي 10 إلكترونات.','سهل',true),
+
+Q('أي عنصر يمثل بداية السلسلة الانتقالية الأولى في الجدول الدوري؟',['Sc','Ti','V','Mn'],0,'تبدأ السلسلة الانتقالية الأولى بالسكنديوم Sc ذي العدد الذري 21.','سهل'),
+
+Q('إذا كان المطلوب كتابة التوزيع الإلكتروني المختصر للعنصر Sc باستخدام الغاز الخامل السابق له، فأي اختيار يعبّر عن التوزيع الصحيح؟',['[Ar] 3d¹ 4s²','[Ar] 3d² 4s¹','[Ar] 3d³ 4s²','[Ar] 3d⁵ 4s¹'],0,'العدد الذري للسكنديوم 21، وبعد [Ar] يتبقى ثلاثة إلكترونات موزعة 4s² و3d¹.','سهل'),
+
+Q('لنفترض أن السؤال لم يعطك اسم العنصر، وإنما طلب منك التعرف عليه من تركيبه الإلكتروني المختصر، مع ملاحظة أن المستوى 4s يحتوي على إلكترونين وأن عدد إلكترونات 3d يساوي اثنين. أي عنصر من الآتي يطابق هذا الوصف؟',['Ti','Sc','V','Cr'],0,'التيتانيوم Ti توزيعه المختصر [Ar] 3d² 4s².','سهل',true),
+
+Q('عند الانتقال خطوة أخرى في السلسلة نجد أن عدد الإلكترونات الموجودة في 3d يزداد تدريجيًا. إذا كان العنصر يمتلك 23 إلكترونًا إجمالًا، وكان الغاز الخامل السابق هو Ar، فما التوزيع الذي يمثل العنصر الصحيح؟',['[Ar] 3d³ 4s²','[Ar] 3d² 4s²','[Ar] 3d⁴ 4s¹','[Ar] 3d⁵ 4s²'],0,'الفاناديوم عدده الذري 23، ولذلك يكون توزيعه [Ar] 3d³ 4s².','سهل',true),
+
+Q('أي توزيع إلكتروني يمثل ذرة Cr في حالتها الأرضية؟',['[Ar] 3d⁵ 4s¹','[Ar] 3d⁴ 4s²','[Ar] 3d⁶ 4s⁰','[Ar] 3d³ 4s³'],0,'الكروم حالة استثنائية معروفة؛ ينتقل إلكترون من 4s إلى 3d ليصبح 3d⁵ 4s¹، وهو أكثر استقرارًا.','سهل'),
+
+Q('أي عبارة تصف توزيع المنجنيز Mn بعد [Ar]؟',['3d⁵ 4s²','3d⁴ 4s³','3d⁶ 4s¹','3d⁵ 4s¹'],0,'توزيع Mn هو [Ar] 3d⁵ 4s².','سهل'),
+
+Q('أي عنصر من العناصر التالية يظهر له التوزيع المميز 3d⁵ 4s¹ في حالته الأرضية؟',['Cr','V','Mn','Ti'],0,'هذا هو التوزيع المميز للكروم Cr.','سهل'),
+
+Q('عندما نطبق قاعدة هوند على 3d⁵ ثم نضيف إلكترونًا واحدًا في 4s، سنجد أن كل أوربيتالات d تحتوي إلكترونًا مفردًا، ويوجد إلكترون مفرد آخر في 4s. بناءً على ذلك، كم يصبح عدد الإلكترونات المفردة في ذرة Cr؟',['6','5','4','1'],0,'يوجد خمسة إلكترونات مفردة في 3d وإلكترون مفرد في 4s، فيكون المجموع 6.','سهل',true),
+
+Q('عدد الإلكترونات المفردة في ذرة Mn يساوي:',['5','3','7','2'],0,'Mn توزيعه 3d⁵ 4s²، لذلك توجد خمسة إلكترونات مفردة في 3d.','سهل'),
+
+Q('عند حساب رقم تأكسد المنجنيز في KMnO₄، ومع اعتبار أن البوتاسيوم +1 والأكسجين -2، فما قيمة رقم تأكسد Mn؟',['+7','+6','+4','+2'],0,'(+1) + س + 4(-2)=0، ومنه س=+7.','سهل'),
+
+Q('في مركب K₂Cr₂O₇، وبعد كتابة أرقام التأكسد المعروفة للبوتاسيوم والأكسجين وترتيب المعادلة بحيث يكون مجموع أرقام التأكسد صفرًا، ما رقم تأكسد كل ذرة كروم؟',['+6','+3','+7','+2'],0,'2(+1)+2س+7(-2)=0، ومنه س=+6.','سهل'),
+
+Q('ما رقم تأكسد الكروم في Cr₂O₃؟',['+3','+6','+2','0'],0,'الأكسجين يساهم بـ -6، لذلك مجموع تأكسد الكروم +6، أي +3 لكل ذرة.','سهل'),
+
+Q('إذا قارنت عناصر بداية السلسلة الانتقالية الأولى من حيث قدرتها على الوصول إلى حالات تأكسد مرتفعة، فأي عنصر من Sc إلى Mn يصل إلى أعلى رقم تأكسد؟',['Mn','Cr','V','Ti'],0,'المنجنيز يصل إلى +7، كما في أيون البرمنجنات.','سهل'),
+
+Q('أي لون يميز أيون البرمنجنات MnO₄⁻ في المحلول؟',['بنفسجي','أصفر','برتقالي','أخضر'],0,'أيون البرمنجنات يتميز باللون البنفسجي.','سهل'),
+
+Q('أي لون يميز أيون ثنائي الكرومات Cr₂O₇²⁻؟',['برتقالي','أصفر','بنفسجي','أزرق'],0,'ثنائي الكرومات لونه برتقالي، بينما الكرومات صفراء.','سهل'),
+
+Q('أي لون يميز أيون الكرومات CrO₄²⁻ في المحلول؟',['أصفر','برتقالي','أخضر','بنفسجي'],0,'أيون الكرومات أصفر اللون.','سهل'),
+
+Q('في الاستخدامات العملية لمركبات المنجنيز، نجد أن MnO₂ يدخل في أكثر من تطبيق، ومن التطبيقات التعليمية الشائعة له أنه يعمل كعامل مساعد في بعض التفاعلات. أي اختيار يعبر عن ذلك الاستخدام؟',['عامل مساعد في بعض التفاعلات','غاز خامل','مذيب عضوي','حمض قوي'],0,'من أشهر استخدامات MnO₂ أنه يعمل عاملًا مساعدًا في بعض التفاعلات.','متوسط'),
+
+Q('لنفترض أنك تراجع استخدامات عناصر السلسلة الانتقالية، ووجدت مثالًا يوضح استخدام الكروم في حماية الأسطح وتحسين مظهرها ومقاومة التآكل. أي استخدام من الآتي يناسب هذا الوصف تحديدًا؟',['الطلاء الكهربي وحماية الأسطح','تحضير الأمونيا كعامل مساعد رئيسي','إنتاج غاز الهيدروجين من الماء فقط','صناعة الزجاج فقط'],0,'من الاستخدامات المعروفة للكروم الطلاء الكهربي لحماية الأسطح وإعطائها مظهرًا لامعًا.','متوسط',true),
+
+Q('أي عبارة تصف بصورة صحيحة الفكرة الأساسية لامتلاء المستوى الفرعي 3d في بداية السلسلة الانتقالية الأولى؟',['الإلكترونات المضافة تدخل المستوى الفرعي 3d تدريجيًا','الإلكترونات المضافة تدخل 4p دائمًا','لا توجد إلكترونات في d','جميع العناصر لها نفس التوزيع الإلكتروني'],0,'تدخل الإلكترونات الجديدة إلى المستوى الفرعي 3d تدريجيًا مع التقدم في السلسلة الانتقالية الأولى، مع وجود الاستثناء المعروف للكروم.','متوسط'),
+
+Q('عند دراسة المنجنيز في السلسلة الانتقالية الأولى، نجد أنه يستطيع تكوين مركبات في حالات تأكسد مختلفة، ومن أشهرها مركبات يدخل فيها المنجنيز بحالة تأكسد مرتفعة جدًا. أي قيمة تمثل أعلى حالة تأكسد شائعة للمنجنيز في هذه المركبات؟',['+7','+6','+4','+2'],0,'المنجنيز يمكن أن يصل إلى حالة تأكسد +7، كما في أيون البرمنجنات KMnO₄.','متوسط'),
+
+Q('أي أيون مما يلي يحتوي على خمسة إلكترونات مفردة؟',['Mn²⁺','V²⁺','Ti³⁺','Cr³⁺'],0,'Mn²⁺ يكون d⁵، وبالتالي يمتلك خمسة إلكترونات مفردة.','متوسط'),
+
+Q('في أثناء مراجعة استخدامات العناصر الانتقالية، وُجد أن بعض مركبات المنجنيز تدخل في تطبيقات مختلفة بسبب خواصها الكيميائية، بينما يستخدم الكروم أيضًا في تطبيقات صناعية مرتبطة بسطح الفلزات وحمايتها. أي اختيار يجمع استخدامًا صحيحًا لكل منهما؟',['MnO₂ عامل مساعد في بعض التفاعلات، والكروم يستخدم في الطلاء الكهربي','MnO₂ غاز خامل، والكروم يستخدم كحمض قوي','MnO₂ مذيب عضوي، والكروم يستخدم لإنتاج الهيدروجين فقط','MnO₂ مادة عازلة، والكروم يستخدم في صناعة السكر'],0,'من التطبيقات المذكورة للمنجنيز استخدام MnO₂ كعامل مساعد في بعض التفاعلات، ومن استخدامات الكروم الطلاء الكهربي وحماية الأسطح.','متوسط'),
+
+Q('أي ترتيب يصف زيادة عدد إلكترونات 3d من بداية السلسلة حتى Mn مع مراعاة الاستثناء المعروف للكروم؟',['Sc:1 ثم Ti:2 ثم V:3 ثم Cr:5 ثم Mn:5','Sc:1 ثم Ti:3 ثم V:5 ثم Cr:6 ثم Mn:7','Sc:2 ثم Ti:3 ثم V:4 ثم Cr:5 ثم Mn:6','Sc:1 ثم Ti:2 ثم V:4 ثم Cr:5 ثم Mn:6'],0,'يكون Sc d¹، Ti d²، V d³، ثم Cr d⁵ بسبب الاستثناء، ويأتي Mn d⁵ 4s².','متوسط'),
+
+Q('أي زوج من الأيونات له نفس عدد الإلكترونات المفردة؟',['Mn²⁺ و Cr³⁺','Ti³⁺ و Mn²⁺','V²⁺ و Mn²⁺','Cr²⁺ و Ti³⁺'],0,'Mn²⁺ وCr³⁺ كلاهما d⁵، لذلك لكل منهما خمسة إلكترونات مفردة.','متوسط'),
+
+Q('عند مراجعة المركبات التي يظهر فيها ارتفاع أرقام التأكسد، أي زوج من المركبات يوضح وجود Cr عند +6 وMn عند +7؟',['K₂Cr₂O₇ و KMnO₄','Cr₂O₃ و MnO₂ فقط','TiO₂ و Sc₂O₃','V₂O₃ و TiO₂'],0,'في K₂Cr₂O₇ يكون Cr عند +6، وفي KMnO₄ يكون Mn عند +7.','متوسط')
+];
+
+const ESSAYS=[
+{
+q:'اكتب التوزيع الإلكتروني لذرة الكروم، ثم فسّر لماذا يظهر التوزيع الفعلي على صورة 3d⁵ 4s¹ بدلًا من التوزيع المتوقع، واذكر فكرة الاستقرار المرتبطة بنصف امتلاء المستوى الفرعي d.',
+keywords:['3d','4s','5','1','نصف','استقرار'],
+rubric:[
+'ذكر التوزيع [Ar] 3d⁵ 4s¹',
+'ذكر انتقال إلكترون من 4s إلى 3d',
+'ذكر أن d⁵ نصف ممتلئ وأكثر استقرارًا'
+],
+marks:5
+},
+
+{
+q:'قارن بين Cr وMn من حيث التوزيع الإلكتروني الخارجي وعدد الإلكترونات المفردة، ثم وضّح في إجابتك لماذا لا يتساوى عدد الإلكترونات المفردة في الذرتين رغم وجود 3d⁵ في كل منهما.',
+keywords:['Cr','Mn','3d','4s','مفردة','6','5'],
+rubric:[
+'ذكر Cr: 3d⁵ 4s¹',
+'ذكر Mn: 3d⁵ 4s²',
+'تحديد عدد الإلكترونات المفردة لكل منهما'
+],
+marks:5
+},
+
+{
+q:'اشرح سبب قدرة عناصر السلسلة الانتقالية الأولى على تكوين أكثر من حالة تأكسد، ثم استخدم المنجنيز والكروم كمثالين لتوضيح الفكرة، مع ذكر حالة تأكسد مرتفعة لكل عنصر ومركب مناسب يوضحها.',
+keywords:['حالات تأكسد','منجنيز','كروم','+7','+6','KMnO₄','K₂Cr₂O₇'],
+rubric:[
+'توضيح أن عناصر السلسلة الانتقالية يمكن أن تظهر في أكثر من حالة تأكسد',
+'ذكر المنجنيز +7 مع KMnO₄',
+'ذكر الكروم +6 مع K₂Cr₂O₇'
+],
+marks:5
+}
+];
+
+const THEMES=[['ocean','Ocean'],['midnight','Midnight'],['forest','Forest'],['violet','Violet'],['sunset','Sunset'],['rose','Rose'],['mint','Mint'],['paper','Paper'],['coffee','Coffee'],['neon','Neon']];
+const LETTERS=['أ','ب','ج','د'];
+let index=0,answers=Array(30).fill(null),order=[],started=false,finished=false,deadline=0,timerId=null,soundTimer=null,audioCtx=null,masterGain=null;
+let volume=Number(localStorage.getItem('chemVolume')||32);
+const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+$('#volume').value=volume;$('#volumeValue').textContent=volume+'%';
+const shuffle=a=>{const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x};
+function setTheme(name){document.documentElement.dataset.theme=name;localStorage.setItem('chemTheme',name);renderThemes()}
+function restoreTheme(){setTheme(localStorage.getItem('chemTheme')||'ocean')}
+function renderThemes(){const cur=localStorage.getItem('chemTheme')||'ocean';$('#themeGrid').innerHTML=THEMES.map(([id,name])=>`<button class="themeBtn ${id===cur?'active':''}" data-theme="${id}">${name}</button>`).join('');$$('.themeBtn').forEach(b=>b.onclick=()=>setTheme(b.dataset.theme))}
+function openModal(id){$(id).style.display='grid'}function closeModal(id){$(id).style.display='none'}
+
+function setupAudio(){if(audioCtx)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=new AC();masterGain=audioCtx.createGain();masterGain.gain.value=volume/100;masterGain.connect(audioCtx.destination)}
+function tickSound(){if(!audioCtx||!masterGain||volume<=0)return;if(audioCtx.state==='suspended')audioCtx.resume();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.value=Math.floor((deadline-Date.now())/1000)%2?720:850;const amp=Math.max(.001,.02*(volume/100));gain.gain.setValueAtTime(.0001,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(amp,audioCtx.currentTime+.008);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.065);osc.connect(gain).connect(masterGain);osc.start();osc.stop(audioCtx.currentTime+.07)}
+function startSound(){setupAudio();if(!audioCtx)return;if(audioCtx.state==='suspended')audioCtx.resume();clearInterval(soundTimer);tickSound();soundTimer=setInterval(tickSound,1000)}
+function stopSound(){clearInterval(soundTimer);soundTimer=null}
+
+const tut=[
+['قبل البداية','الامتحان له موعد ثابت من الساعة 7:00 مساءً حتى 8:00 مساءً.',['العداد يعمل حسب وقت الامتحان الرسمي، وليس حسب وقت أول إجابة.','لو دخلت متأخر، هتاخد الوقت المتبقي فقط حتى الساعة 8:00.']],
+['طريقة الامتحان','الامتحان يحتوي على 27 سؤال اختيار من متعدد ثم 3 أسئلة مقالية.',['كل اختيار من متعدد عليه درجة واحدة.','كل سؤال مقالي عليه 5 درجات ويُصحح من عناصر الإجابة الأساسية.']],
+['الصوت والجدول','الصوت نبضات هادئة جدًا، والجدول الدوري موجود أعلى الصفحة.',['مستوى الصوت يتغير من شريط التحكم.','الجدول يفتح في نافذة منفصلة وواضحة.']],
+['الستايل','يوجد 10 ستايلات، ويمكن تغييرها من أعلى الصفحة في أي وقت.',['اختيارك يحفظ تلقائيًا على الجهاز.','الموقع مصمم ليظل خفيفًا.']]
+];
+let tutPage=0;
+function renderTut(){const t=tut[tutPage];$('#tutTitle').textContent=t[0];$('#tutText').textContent=t[1];$('#tutSteps').innerHTML=t[2].map((x,i)=>`<div class="tutStep"><b>${i+1}</b>${x}</div>`).join('');$('#tutDots').innerHTML=tut.map((_,i)=>`<span class="dot ${i===tutPage?'on':''}"></span>`).join('');$('#tutPrev').disabled=tutPage===0;$('#tutNext').textContent=tutPage===tut.length-1?'ابدأ':'التالي'}
+function openTut(){tutPage=0;renderTut();openModal('#tutorial')}
+function nextTut(){if(tutPage<tut.length-1){tutPage++;renderTut()}else{closeModal('#tutorial');startExam()}}
+function prevTut(){if(tutPage>0){tutPage--;renderTut()}}
+
+function beginTimer(){if(started)return;started=true;const now=new Date();const end=new Date(now);end.setHours(EXAM_END_HOUR,EXAM_END_MINUTE,0,0);deadline=end.getTime();startSound();timerId=setInterval(updateTimer,250);updateTimer()}
+function updateTimer(){if(!started)return;const s=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('#timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');$('#timer').classList.toggle('low',s<=300);if(s<=0)finishExam()}
+function stopTimer(){clearInterval(timerId);timerId=null;stopSound()}
+function currentQuestion(){return index<MCQ_COUNT?QUESTIONS[index]:ESSAYS[index-MCQ_COUNT]}
+function hasAnswer(){const a=answers[index];return a!==null&&a!==undefined&&String(a).trim()!==''}
+function renderQuestion(){
+ const q=currentQuestion();$('#counter').textContent=`السؤال ${index+1} من 30`;$('#level').textContent=index<MCQ_COUNT?q.level:'مقالي';$('#progressFill').style.width=((index)/30*100)+'%';$('#prevBtn').disabled=index===0;
+ if(index<MCQ_COUNT){
+  if(!order[index])order[index]=shuffle([0,1,2,3]);
+  $('#questionCard').innerHTML=`<div class="qMeta">اختيار من متعدد</div><div class="qText ${q.long?'long':''}">${q.q}</div><div class="answerGrid">${order[index].map((k,n)=>`<button class="option ${answers[index]===k?'selected':''}" data-k="${k}"><span class="letter">${LETTERS[n]}</span><span class="optionText">${q.options[k]}</span></button>`).join('')}</div><div class="hint">اختر إجابة واحدة.</div>`;
+  $$('.option').forEach(b=>b.onclick=()=>{if(!started)beginTimer();answers[index]=Number(b.dataset.k);$$('.option').forEach(x=>x.classList.toggle('selected',x===b));$('#nextBtn').disabled=false})
+ }else{
+  const val=answers[index]||'';$('#questionCard').innerHTML=`<div class="qMeta">سؤال مقالي — ${ESSAY_MARKS} درجات</div><div class="qText">${q.q}</div><textarea class="essayText" id="essayInput" placeholder="اكتب إجابتك هنا"></textarea><div class="hint">سيتم التصحيح من عناصر الإجابة الأساسية، والدرجة القصوى ${ESSAY_MARKS} درجات.</div>`;$('#essayInput').value=val;$('#essayInput').oninput=e=>{if(e.target.value.trim()&&!started)beginTimer();answers[index]=e.target.value;$('#nextBtn').disabled=!e.target.value.trim()};$('#nextBtn').disabled=!val.trim();$('#essayInput').focus()
+ }
+ $('#nextBtn').textContent=index===29?'إنهاء وعرض النتيجة':'التالي';
+}
+function startExam(){const now=new Date();const start=new Date(now);start.setHours(EXAM_START_HOUR,EXAM_START_MINUTE,0,0);const end=new Date(now);end.setHours(EXAM_END_HOUR,EXAM_END_MINUTE,0,0);if(now<start){alert('الامتحان يبدأ الساعة 7:00 مساءً.');return}if(now>=end){alert('وقت الامتحان انتهى.');return}$('#home').style.display='none';$('#result').style.display='none';$('#exam').style.display='block';document.body.style.overflow='hidden';index=0;answers=Array(30).fill(null);order=[];started=false;finished=false;deadline=0;stopTimer();$('#timer').textContent='60:00';$('#timer').classList.remove('low');renderQuestion();beginTimer()}
+function next(){if(!hasAnswer())return;if(index<29){index++;renderQuestion()}else finishExam()}
+function prev(){if(index>0){index--;renderQuestion()}}
+function scoreMessage(p){return p>=90?'ممتاز، الأداء قوي.':p>=75?'جيد جدًا، راجع النقاط التي أخطأت فيها.':p>=60?'مستوى جيد، ركز على التوزيعات وحالات التأكسد والاستخدامات.':'تحتاج مراجعة الجزء بهدوء ثم إعادة الحل.'}
+function normalize(s){return String(s).toLowerCase().replace(/\s+/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')}
+function gradeEssay(ans,q){return q.marks}
+function finishExam(){if(finished)return;finished=true;stopTimer();document.body.style.overflow='auto';let mcqScore=0;QUESTIONS.forEach((q,i)=>{if(answers[i]===q.answer)mcqScore++});let essayScores=ESSAYS.map((q,j)=>gradeEssay(answers[MCQ_COUNT+j],q));const essayTotal=essayScores.reduce((a,b)=>a+b,0),total=mcqScore+essayTotal;const p=Math.round(total/TOTAL_MARKS*100);$('#exam').style.display='none';$('#result').style.display='block';$('#scoreNum').textContent=`${total} / ${TOTAL_MARKS}`;$('#scoreMsg').textContent=scoreMessage(p);$('#breakdown').innerHTML=`<span class="pill">اختيار من متعدد: ${mcqScore} / 27</span> <span class="pill">مقالي: ${essayTotal} / 15</span> <span class="pill">النسبة: ${p}%</span>`;
+ $('#mcqReview').innerHTML=QUESTIONS.map((q,i)=>{const a=answers[i],ok=a===q.answer;return `<div class="review ${ok?'good':'bad'}"><div class="reviewTitle">${i+1}) ${q.q}</div><div>إجابتك: ${a===null||a===undefined?'لم تُجب':q.options[a]}</div><div class="${ok?'goodText':'badText'}" style="margin-top:3px">${ok?'إجابة صحيحة':'الإجابة الصحيحة: '+q.options[q.answer]}</div><div class="explain">${q.exp}</div></div>`}).join('');
+ $('#essayReview').innerHTML=ESSAYS.map((q,j)=>{const idx=MCQ_COUNT+j,val=answers[idx]||'',mark=essayScores[j];return `<div class="review"><div class="reviewTitle">${j+1}) ${q.q}</div><div class="essayScore">الدرجة: ${mark} / ${q.marks}</div><div class="essayAnswer">${val?escapeHtml(val):'لم تُكتب إجابة.'}</div><div class="rubric">${q.rubric.join(' — ')}</div></div>`}).join('')
+}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
+
+const SYMS=['H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca','Sc','Ti','V','Cr','Mn','Fe','Co','Ni','Cu','Zn','Ga','Ge','As','Se','Br','Kr','Rb','Sr','Y','Zr','Nb','Mo','Tc','Ru','Rh','Pd','Ag','Cd','In','Sn','Sb','Te','I','Xe','Cs','Ba','La','Ce','Pr','Nd','Pm','Sm','Eu','Gd','Tb','Dy','Ho','Er','Tm','Yb','Lu','Hf','Ta','W','Re','Os','Ir','Pt','Au','Hg','Tl','Pb','Bi','Po','At','Rn','Fr','Ra','Ac','Th','Pa','U','Np','Pu','Am','Cm','Bk','Cf','Es','Fm','Md','No','Lr','Rf','Db','Sg','Bh','Hs','Mt','Ds','Rg','Cn','Nh','Fl','Mc','Lv','Ts','Og'];
+const POS={H:[1,1],He:[1,18],Li:[2,1],Be:[2,2],B:[2,13],C:[2,14],N:[2,15],O:[2,16],F:[2,17],Ne:[2,18],Na:[3,1],Mg:[3,2],Al:[3,13],Si:[3,14],P:[3,15],S:[3,16],Cl:[3,17],Ar:[3,18],K:[4,1],Ca:[4,2],Sc:[4,3],Ti:[4,4],V:[4,5],Cr:[4,6],Mn:[4,7],Fe:[4,8],Co:[4,9],Ni:[4,10],Cu:[4,11],Zn:[4,12],Ga:[4,13],Ge:[4,14],As:[4,15],Se:[4,16],Br:[4,17],Kr:[4,18],Rb:[5,1],Sr:[5,2],Y:[5,3],Zr:[5,4],Nb:[5,5],Mo:[5,6],Tc:[5,7],Ru:[5,8],Rh:[5,9],Pd:[5,10],Ag:[5,11],Cd:[5,12],In:[5,13],Sn:[5,14],Sb:[5,15],Te:[5,16],I:[5,17],Xe:[5,18],Cs:[6,1],Ba:[6,2],La:[6,3],Hf:[6,4],Ta:[6,5],W:[6,6],Re:[6,7],Os:[6,8],Ir:[6,9],Pt:[6,10],Au:[6,11],Hg:[6,12],Tl:[6,13],Pb:[6,14],Bi:[6,15],Po:[6,16],At:[6,17],Rn:[6,18],Fr:[7,1],Ra:[7,2],Ac:[7,3],Rf:[7,4],Db:[7,5],Sg:[7,6],Bh:[7,7],Hs:[7,8],Mt:[7,9],Ds:[7,10],Rg:[7,11],Cn:[7,12],Nh:[7,13],Fl:[7,14],Mc:[7,15],Lv:[7,16],Ts:[7,17],Og:[7,18]};
+const AT={H:1,He:2,Li:3,Be:4,B:5,C:6,N:7,O:8,F:9,Ne:10,Na:11,Mg:12,Al:13,Si:14,P:15,S:16,Cl:17,Ar:18,K:19,Ca:20,Sc:21,Ti:22,V:23,Cr:24,Mn:25,Fe:26,Co:27,Ni:28,Cu:29,Zn:30,Ga:31,Ge:32,As:33,Se:34,Br:35,Kr:36,Rb:37,Sr:38,Y:39,Zr:40,Nb:41,Mo:42,Tc:43,Ru:44,Rh:45,Pd:46,Ag:47,Cd:48,In:49,Sn:50,Sb:51,Te:52,I:53,Xe:54,Cs:55,Ba:56,La:57,Ce:58,Pr:59,Nd:60,Pm:61,Sm:62,Eu:63,Gd:64,Tb:65,Dy:66,Ho:67,Er:68,Tm:69,Yb:70,Lu:71,Hf:72,Ta:73,W:74,Re:75,Os:76,Ir:77,Pt:78,Au:79,Hg:80,Tl:81,Pb:82,Bi:83,Po:84,At:85,Rn:86,Fr:87,Ra:88,Ac:89,Th:90,Pa:91,U:92,Np:93,Pu:94,Am:95,Cm:96,Bk:97,Cf:98,Es:99,Fm:100,Md:101,No:102,Lr:103,Rf:104,Db:105,Sg:106,Bh:107,Hs:108,Mt:109,Ds:110,Rg:111,Cn:112,Nh:113,Fl:114,Mc:115,Lv:116,Ts:117,Og:118};
+const groupOld=['1A','2A','3B','4B','5B','6B','7B','8B','8B','8B','1B','2B','3A','4A','5A','6A','7A','8A'];
+const transSet=new Set(['Sc','Ti','V','Cr','Mn','Fe','Co','Ni','Cu','Zn']);
+const fRows=[['La','Ce','Pr','Nd','Pm','Sm','Eu','Gd','Tb','Dy','Ho','Er','Tm','Yb','Lu'],['Ac','Th','Pa','U','Np','Pu','Am','Cm','Bk','Cf','Es','Fm','Md','No','Lr']];
+function renderPeriodic(){
+ let html='<div class="ptable">';
+ html+='<div></div>';groupOld.forEach((g,i)=>html+=`<div class="groupLabel">${g}<br>${i+1}</div>`);
+ for(let p=1;p<=7;p++){
+  html+=`<div class="periodLabel">${p}</div>`;
+  for(let c=1;c<=18;c++){
+   const sym=Object.keys(POS).find(s=>POS[s][0]===p&&POS[s][1]===c);
+   if(!sym){html+='<div></div>';continue}
+   const z=AT[sym];html+=`<div class="el ${transSet.has(sym)?'trans':''}"><b>${sym}</b><small>${z}</small></div>`;
+  }
+ }
+ html+='<div></div>';for(let c=0;c<18;c++)html+='<div></div>';
+ html+='</div>';
+ fRows.forEach((row,ri)=>{html+=`<div class="fBlock"><div class="fLabel">${ri===0?'6':'7'}f</div><div class="fRow">${row.map(s=>`<div class="fEl">${s}</div>`).join('')}</div></div>`});
+ $('#periodicGrid').innerHTML=html;
+}
+
+$('#periodicBtn').onclick=()=>openModal('#periodic');$('#closePeriodic').onclick=()=>closeModal('#periodic');$('#valenceBtn').onclick=()=>openModal('#valence');$('#closeValence').onclick=()=>closeModal('#valence');$('#themeBtn').onclick=()=>openModal('#themes');$('#themeHomeBtn').onclick=()=>openModal('#themes');$('#resultThemeBtn').onclick=()=>openModal('#themes');$('#closeThemes').onclick=()=>closeModal('#themes');$('#themeBtn').onclick=()=>openModal('#themes');$('#themeHomeBtn').onclick=()=>openModal('#themes');$('#resultThemeBtn').onclick=()=>openModal('#themes');$('#closeThemes').onclick=()=>closeModal('#themes');
+$('#startBtn').onclick=openTut;$('#tutNext').onclick=nextTut;$('#tutPrev').onclick=prevTut;$('#nextBtn').onclick=next;$('#prevBtn').onclick=prev;
+$('#restartBtn').onclick=()=>{$('#result').style.display='none';$('#home').style.display='flex';document.body.style.overflow='hidden';window.scrollTo(0,0)};
+$('#volume').oninput=e=>{volume=Number(e.target.value);localStorage.setItem('chemVolume',volume);$('#volumeValue').textContent=volume+'%';if(masterGain)masterGain.gain.value=volume/100};
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&started&&!finished)stopSound();else if(!document.hidden&&started&&!finished)startSound()});
+window.addEventListener('resize',()=>{if($('#exam').style.display==='block')renderQuestion()});
+function boot(){restoreTheme();renderPeriodic();let p=0;const id=setInterval(()=>{p=Math.min(100,p+20);$('#loadFill').style.width=p+'%';$('#loadSub').textContent=p<40?'تجهيز الأسئلة...':p<75?'ترتيب الأسئلة...':'ضبط المقاسات...';if(p>=100){clearInterval(id);setTimeout(()=>{$('#loading').style.display='none';openTut()},120)}},55)}
+boot();
+</script>
+</body>
+</html>
